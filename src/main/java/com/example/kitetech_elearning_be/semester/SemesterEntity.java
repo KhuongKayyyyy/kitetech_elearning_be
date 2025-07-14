@@ -43,14 +43,3 @@ public class SemesterEntity {
     @Column(nullable = false)
     private LocalDate endDate;
 }
-
-
-//Table Semesters {
-//id integer [pk, increment]
-//academic_year_id integer [ref: > Academic_Years.id] // Liên kết với niên học
-//name varchar(50) [not null, unique] // Tên học kỳ, ví dụ: "Fall 2023", "Spring 2024"
-//start_date date [not null] // Ngày bắt đầu học kỳ
-//end_date date [not null] // Ngày kết thúc học kỳ
-//status enum('Active', 'Closed', 'ExamPeriod') [default: 'Active'] // Trạng thái học kỳ
-//description text // Mô tả thêm (tùy chọn)
-//}
