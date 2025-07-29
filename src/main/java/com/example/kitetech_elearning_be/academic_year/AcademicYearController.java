@@ -19,21 +19,13 @@ public class AcademicYearController {
 
     private final AcademicService academicService;
 
-    @GetMapping("/listAll")
-    public ResponseEntity<ApiResponse<List<AcademicYearDTO>>> getAllAsList() {
+    @GetMapping("/getAll")
+    public ResponseEntity<ApiResponse<List<AcademicYearDTO>>> getAll() {
         List<AcademicYearDTO> academicYears = academicService.getAllAcademicYears(); // without pageable
-
-        Metadata metadata = new Metadata(
-                academicYears.size(),
-                academicYears.size(),
-                1,
-                academicYears.size(),
-                false
-        );
         ApiResponse<List<AcademicYearDTO>> response = new ApiResponse<>(
                 true,
                 "Fetched academic years successfully",
-                metadata,
+                null,
                 academicYears
         );
 
@@ -57,9 +49,9 @@ public class AcademicYearController {
 
         Metadata metadata = new Metadata(
                 (int) pagedResult.getTotalElements(),
-                pagedResult.getNumberOfElements(),
                 pagedResult.getNumber() + 1,
                 pagedResult.getSize(),
+                pagedResult.getTotalPages(),
                 pagedResult.hasNext()
         );
 
@@ -77,17 +69,10 @@ public class AcademicYearController {
     public ResponseEntity<ApiResponse<List<AcademicYearDTO>>> searchByYear(@RequestParam int year) {
         List<AcademicYearDTO> academicYears = academicService.findByYear(year); // without pageable
 
-        Metadata metadata = new Metadata(
-                academicYears.size(),
-                academicYears.size(),
-                1,
-                academicYears.size(),
-                false
-        );
         ApiResponse<List<AcademicYearDTO>> response = new ApiResponse<>(
                 true,
                 "Fetched academic years successfully",
-                metadata,
+                null,
                 academicYears
         );
 

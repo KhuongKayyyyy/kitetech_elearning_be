@@ -18,10 +18,8 @@ import java.util.UUID;
 @Builder
 public class SemesterEntity {
     @Id
-    @GeneratedValue(generator = "UUID",strategy = GenerationType.AUTO)
-    private UUID id;
-
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "academic_year_id")

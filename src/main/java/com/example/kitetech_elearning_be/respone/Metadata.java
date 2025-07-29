@@ -6,9 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class Metadata {
-    private int total;
     private int count;
-    private int page;
-    private int size;
+    private Integer page;
+    private Integer size;
+    private Integer totalPages;
     private boolean hasMore;
 }
