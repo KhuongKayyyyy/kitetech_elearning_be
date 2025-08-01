@@ -1,5 +1,6 @@
 package com.example.kitetech_elearning_be.name_recognition;
 
+import com.example.kitetech_elearning_be.config.NameRecognitionNotifier;
 import com.example.kitetech_elearning_be.exception.DuplicateNameRecognitionException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -12,7 +13,7 @@ import java.util.List;
 public class NameRecognitionService {
     private final NameRecognitionMapper nameRecognitionMapper;
     private final NameRecognitionRepository nameRecognitionRepository;
-
+    private final NameRecognitionNotifier nameRecognitionNotifier;
     public List<NameRecognitionDTO> getNameRecognitions() {
         return nameRecognitionRepository.findAll().stream().map(
                 nr -> nameRecognitionMapper.toDTO(nr, new NameRecognitionDTO())
@@ -35,15 +36,14 @@ public class NameRecognitionService {
 
 
     public NameRecognitionEntity createNameRecognition(NameRecognitionDTO nameRecognitionDTO) {
-        System.out.println(nameRecognitionDTO);
-        boolean exists = nameRecognitionRepository.existsByClassSessionIDAndStudentID(
-                nameRecognitionDTO.getClassSessionID(),
-                nameRecognitionDTO.getStudentID()
-        );
-
-        if (exists) {
-            throw new DuplicateNameRecognitionException("Student already registered for this class session.");
-        }
+//        boolean exists = nameRecognitionRepository.existsByClassSessionIDAndStudentID(
+//                nameRecognitionDTO.getClassSessionID(),
+//                nameRecognitionDTO.getStudentID()
+//        );
+//
+//        if (exists) {
+//            throw new DuplicateNameRecognitionException("Student already registered for this class session.");
+//        }
 
         final NameRecognitionEntity nameRecognitionEntity = NameRecognitionEntity
                 .builder()
@@ -53,7 +53,12 @@ public class NameRecognitionService {
                 .time(LocalDateTime.now())
                 .build();
 
-        return nameRecognitionRepository.save(nameRecognitionEntity);
+        NameRecognitionEntity saved = nameRecognitionRepository.save(nameRecognitionEntity);
+
+        NameRecognitionDTO responseDTO = nameRecognitionMapper.toDTO(saved, new NameRecognitionDTO());
+        nameRecognitionNotifier.notify(saved.getClassSessionID(), responseDTO);
+
+        return saved;
     }
 
 }
