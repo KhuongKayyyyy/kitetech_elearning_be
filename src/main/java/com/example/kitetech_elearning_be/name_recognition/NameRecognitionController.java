@@ -24,7 +24,6 @@ public class NameRecognitionController {
                 null, // You can replace this with real Metadata if needed
                 responseDTO
         );
-
         return ResponseEntity.ok(response);
     }
 

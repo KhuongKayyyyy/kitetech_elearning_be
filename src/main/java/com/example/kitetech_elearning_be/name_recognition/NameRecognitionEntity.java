@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Table(name = "name_recognition")
 @Data
@@ -18,8 +20,14 @@ public class NameRecognitionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
+    private String name;
+
     @Column(nullable = false)
     private String studentID;
     @Column(nullable = false)
     private String classSessionID;
+
+    @Column(nullable = false)
+    private LocalDateTime time;
 }

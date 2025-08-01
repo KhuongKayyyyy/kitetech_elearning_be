@@ -35,6 +35,7 @@ public class NameRecognitionService {
 
 
     public NameRecognitionEntity createNameRecognition(NameRecognitionDTO nameRecognitionDTO) {
+        System.out.println(nameRecognitionDTO);
         boolean exists = nameRecognitionRepository.existsByClassSessionIDAndStudentID(
                 nameRecognitionDTO.getClassSessionID(),
                 nameRecognitionDTO.getStudentID()
@@ -46,8 +47,10 @@ public class NameRecognitionService {
 
         final NameRecognitionEntity nameRecognitionEntity = NameRecognitionEntity
                 .builder()
+                .name(nameRecognitionDTO.getName())
                 .studentID(nameRecognitionDTO.getStudentID())
                 .classSessionID(nameRecognitionDTO.getClassSessionID())
+                .time(LocalDateTime.now())
                 .build();
 
         return nameRecognitionRepository.save(nameRecognitionEntity);
