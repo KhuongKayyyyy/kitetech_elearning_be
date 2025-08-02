@@ -1,6 +1,5 @@
 package com.example.kitetech_elearning_be.name_recognition;
 
-import com.example.kitetech_elearning_be.academic_year.AcademicYearEntity;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
